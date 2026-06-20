@@ -1,7 +1,6 @@
 name: Test netbird Chart
 
 on:
-  push:
   pull_request:
 
 jobs:
