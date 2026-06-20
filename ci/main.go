@@ -30,6 +30,10 @@ func (m NetbirdHelm) Publish(
 	// If true, log what would be done without pushing or creating a release
 	// +optional
 	dryRun bool,
+	// Previous tag for this chart, used as the start of the changelog range.
+	// Omit to let GitHub auto-detect (may include unrelated tags).
+	// +optional
+	previousTag string,
 ) (string, error) {
 	chartName, version, err := logic.ParseTag(chartTag)
 	if err != nil {
@@ -54,7 +58,7 @@ func (m NetbirdHelm) Publish(
 		return "", err
 	}
 
-	if err := createGitHubRelease(ctx, repoOwner, "netbird-helm", chartName, version, registryToken); err != nil {
+	if err := createGitHubRelease(ctx, repoOwner, "netbird-helm", chartName, version, previousTag, registryToken); err != nil {
 		return "", err
 	}
 

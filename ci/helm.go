@@ -22,13 +22,18 @@ func helmPublish(ctx context.Context, source *dagger.Directory, owner, chartName
 }
 
 // createGitHubRelease creates a GitHub Release using the Dagger gh module.
-func createGitHubRelease(ctx context.Context, owner, repo, chartName, version string, token *dagger.Secret) error {
+func createGitHubRelease(ctx context.Context, owner, repo, chartName, version, previousTag string, token *dagger.Secret) error {
 	tag := fmt.Sprintf("charts/%s/v%s", chartName, version)
 
-	return dag.Gh().Release().Create(ctx, tag, tag, dagger.GhReleaseCreateOpts{
+	opts := dagger.GhReleaseCreateOpts{
 		Repo:          owner + "/" + repo,
 		Token:         token,
 		GenerateNotes: true,
 		PreRelease:    logic.IsPreRelease(version),
-	})
+	}
+	if previousTag != "" {
+		opts.NotesStartTag = previousTag
+	}
+
+	return dag.Gh().Release().Create(ctx, tag, tag, opts)
 }

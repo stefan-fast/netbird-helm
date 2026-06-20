@@ -17,12 +17,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Find previous chart tag
+        id: prev-tag
+        run: |
+          CHART_NAME=$(echo "${{ github.ref_name }}" | cut -d'/' -f2)
+          PREV=$(git tag --list "charts/${CHART_NAME}/v*" | sort -V | grep -v "${{ github.ref_name }}" | tail -1)
+          echo "tag=${PREV}" >> "$GITHUB_OUTPUT"
+
       - name: Publish Helm Chart
         uses: dagger/dagger-for-github@456fc3af63a2ba6f9789af9c55045b459115541b # v8.3.0
         with:
           version: "v0.21.7"
           verb: call
           module: ./ci
-          args: publish --source=. --chart-tag=${{ github.ref_name }} --registry-token=env://GITHUB_TOKEN --repo-owner=${{ github.repository_owner }}
+          args: publish --source=. --chart-tag=${{ github.ref_name }} --registry-token=env://GITHUB_TOKEN --repo-owner=${{ github.repository_owner }} --previous-tag=${{ steps.prev-tag.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
