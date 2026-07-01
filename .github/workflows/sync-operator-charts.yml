@@ -1,8 +1,5 @@
 name: Sync Operator Charts
 
-on:
-  pull_request:
-
 jobs:
   sync:
     runs-on: ubuntu-latest
