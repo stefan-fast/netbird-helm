@@ -1,5 +1,8 @@
 name: Test kubernetes-operator Chart
 
+on:
+  workflow_dispatch:
+
 jobs:
   test-e2e:
     name: Run on Ubuntu
