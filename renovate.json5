@@ -11,21 +11,19 @@
       "matchManagers": [
         "gomod"
       ],
-      "matchPaths": [
+      "matchFileNames": [
         "ci/**",
         "ci/tests/**"
       ],
       "enabled": false
     },
     {
-      // Target custom Dagger Engine updates
       "matchManagers": [
         "regex"
       ],
-      "matchPaths": [
-        "(^|/)dagger\\.json$"
+      "matchFileNames": [
+        "/(^|/)dagger\\.json$/"
       ],
-      // Inject a prominent note to developers into the PR body
       "prBodyNotes": [
         "### ⚠️ Manual Action Required Before Merge",
         "Because this PR updates the Dagger Engine version, you **must** manually synchronize the Go boilerplate code locally before merging this PR:",
