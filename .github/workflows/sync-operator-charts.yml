@@ -61,7 +61,7 @@ jobs:
 
       - name: Checkout this repo
         if: steps.version-check.outputs.changed == 'true' && steps.check-pr.outputs.skip != 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           token: ${{ secrets.CHART_SYNC_TOKEN }}
