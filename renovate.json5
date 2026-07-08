@@ -45,5 +45,12 @@
       datasourceTemplate: 'github-releases',
       depNameTemplate: 'dagger/dagger',
     },
+    {
+      customType: 'regex',
+      managerFilePatterns: ['charts/netbird/Chart.yaml'],
+      matchStrings: ['appVersion:\\s*"(?<currentValue>[^"]+)"'],
+      datasourceTemplate: 'docker',
+      depNameTemplate: 'netbirdio/netbird-server',
+    },
   ],
 }
