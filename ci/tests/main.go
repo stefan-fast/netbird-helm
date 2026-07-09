@@ -30,9 +30,14 @@ func (m *Tests) All(ctx context.Context, source *dagger.Directory) error {
 func (m *Tests) PublishDryRun(ctx context.Context, source *dagger.Directory) error {
 	fakeToken := dag.SetSecret("registry-token", "fake-token")
 
+	// Build a synthetic source with Chart.yaml version matching the tag to avoid
+	// coupling the test to the real chart version in the repository.
+	chartYAML := "apiVersion: v2\nname: netbird\nversion: 2.0.0\n"
+	syntheticSource := source.WithNewFile("charts/netbird/Chart.yaml", chartYAML)
+
 	result, err := dag.NetbirdHelm().Publish(
 		ctx,
-		source,
+		syntheticSource,
 		"charts/netbird/v2.0.0",
 		fakeToken,
 		"testorg",
