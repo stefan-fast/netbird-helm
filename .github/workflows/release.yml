@@ -27,7 +27,7 @@ jobs:
       - name: Publish Helm Chart
         uses: dagger/dagger-for-github@27b130bf0f79a7f6fbbbe0fbca6760dc9bb40a77 # v8.4.1
         with:
-          version: "v0.21.7"
+          version: "v0.21.9"
           verb: call
           module: ./ci
           args: publish --source=. --chart-tag=${{ github.ref_name }} --registry-token=env://GITHUB_TOKEN --repo-owner=${{ github.repository_owner }} --previous-tag=${{ steps.prev-tag.outputs.tag }}
