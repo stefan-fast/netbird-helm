@@ -17,12 +17,11 @@
       enabled: false,
     },
     {
-      matchManagers: [
-        'custom.regex',
+      // Group Dagger updates together
+      matchPackageNames: [
+        'dagger/dagger'
       ],
-      matchFileNames: [
-        '/(^|/)dagger\\.json$/',
-      ],
+      groupName: 'Dagger Engine',
       prBodyNotes: [
         '### ⚠️ Manual Action Required Before Merge',
         'Because this PR updates the Dagger Engine version, you **must** manually synchronize the Go boilerplate code locally before merging this PR:',
@@ -35,20 +34,28 @@
   ],
   customManagers: [
     {
+      // Dagger Manager
       customType: 'regex',
-      managerFilePatterns: [
-        '/(^|/)dagger\\.json$/',
+      fileMatch: [
+        '(^|/)dagger\\.json$',
+        '^\\.github/workflows/release\\.yml$',
       ],
       matchStrings: [
         '"engineVersion":\\s*"(?<currentValue>.*?)"',
+        'version:\\s*"(?<currentValue>v?[0-9]+\\.[0-9]+\\.[0-9]+)"',
       ],
       datasourceTemplate: 'github-releases',
       depNameTemplate: 'dagger/dagger',
     },
     {
+      // NetBird Manager
       customType: 'regex',
-      managerFilePatterns: ['charts/netbird/Chart.yaml'],
-      matchStrings: ['appVersion:\\s*"(?<currentValue>[^"]+)"'],
+      fileMatch: [
+        'charts/netbird/Chart.yaml'
+      ],
+      matchStrings: [
+        'appVersion:\\s*"(?<currentValue>[^"]+)"'
+      ],
       datasourceTemplate: 'docker',
       depNameTemplate: 'netbirdio/netbird-server',
     },
