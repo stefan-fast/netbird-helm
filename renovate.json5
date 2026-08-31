@@ -36,7 +36,7 @@
     {
       // Dagger Manager
       customType: 'regex',
-      fileMatch: [
+      managerFilePatterns: [
         '(^|/)dagger\\.json$',
         '^\\.github/workflows/release\\.yml$',
       ],
@@ -50,7 +50,7 @@
     {
       // NetBird Manager
       customType: 'regex',
-      fileMatch: [
+      managerFilePatterns: [
         'charts/netbird/Chart.yaml'
       ],
       matchStrings: [
