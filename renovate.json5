@@ -37,8 +37,8 @@
       // Dagger Manager
       customType: 'regex',
       managerFilePatterns: [
-        '(^|/)dagger\\.json$',
-        '^\\.github/workflows/release\\.yml$',
+        '/(^|/)dagger\\.json$/',
+        '/^\\.github/workflows/release\\.yml$/',
       ],
       matchStrings: [
         '"engineVersion":\\s*"(?<currentValue>.*?)"',
